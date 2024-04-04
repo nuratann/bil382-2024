@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres_buyers
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5051:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+
+  elasticsearch:
+     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+     container_name: elasticsearch
+     environment:
+       - discovery.type=single-node
+     ports:
+       - "9200:9200"
+       - "9300:9300"
+     volumes:
+       - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.4
+    command: [ "start-dev", "--import-realm" ]
+    restart: unless-stopped
+    environment:
+      KC_DB: postgres
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+      KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak22"
+      KC_METRICS_ENABLED: true
+#      KC_LOG_LEVEL: ${KC_LOG_LEVEL}
+#      KC_REALM_NAME: ${KC_REALM_NAME}
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+#      GF_URL: ${GF_HOSTNAME}:${GF_SERVER_HTTP_PORT}
+#      GF_ADMIN_USERNAME: ${GF_ADMIN_USERNAME}
+#      GF_ADMIN_PASSWORD: ${GF_ADMIN_PASSWORD}
+    ports:
+      - 5052:8080
+    volumes:
+      - ./keycloak22/realm.json:/opt/keycloak/data/import/realm.json:ro
+    networks:
+      - postgres
+  #    logging: *logging
+
+
+  pgadmin4:
+    image: elestio/pgadmin:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: kadyrov.atan@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 8080
+    ports:
+      - "5050:8080"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    networks:
+      - postgres
+
+#  zipkin:
+#    image: openzipkin/zipkin
+#    container_name: zipkin-gilgamesh
+#    ports:
+#      - "9411:9411"
+#    networks:
+#      - spring
+#
+#
+#  zookeeper:
+#    image: confluentinc/cp-zookeeper:latest
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#    ports:
+#      - 22181:2181
+#
+#  kafka:
+#    image: confluentinc/cp-kafka:latest
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - 29092:29092
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+#      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+networks:
+  postgres:
+    driver: bridge
+  elastic:
+    driver: bridge
+#  spring:
+#    driver: bridge
+volumes:
+  postgres_data:
+  pgadmin:
+  esdata:
+    driver: local
