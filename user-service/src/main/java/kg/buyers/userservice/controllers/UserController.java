@@ -5,14 +5,11 @@ import kg.buyers.userservice.entities.User;
 import kg.buyers.userservice.services.KeycloakUserService;
 import kg.buyers.userservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -40,10 +37,18 @@ public class UserController {
         return userService.findAll();
     }
 
+    @CrossOrigin("*")
     @PostMapping("/")
-    public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+    public ResponseEntity<Object> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+        if (userService.existsByEmail(userRegistrationDTO.getEmail())) {
+            userRegistrationDTO.setConflictField("email");
+            return new ResponseEntity<>(userRegistrationDTO,HttpStatus.CONFLICT);
+        }
+        if (userService.existsByUsername(userRegistrationDTO.getUsername())) {
+            userRegistrationDTO.setConflictField("username");
+            return new ResponseEntity<>(userRegistrationDTO,HttpStatus.CONFLICT);
+        }
         var KCUser = keycloakUserService.createUser(userRegistrationDTO.toKeycloakUserDTO());
-        System.out.println(KCUser.getId());
         User savedUser = userService.save(userRegistrationDTO,KCUser.getId());
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }

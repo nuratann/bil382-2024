@@ -3,6 +3,7 @@ package kg.buyers.userservice.services;
 import kg.buyers.userservice.dto.UserRegistrationDTO;
 import kg.buyers.userservice.entities.User;
 import kg.buyers.userservice.repositories.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -32,7 +33,7 @@ public class UserService {
                 .username(userRegistrationDTO.getUsername())
                 .firstName(userRegistrationDTO.getFirstName())
                 .lastName(userRegistrationDTO.getLastName())
-                .birthDay(userRegistrationDTO.getBirthDay())
+                .birthDate(userRegistrationDTO.getBirthDate())
                 .email(userRegistrationDTO.getEmail())
                 .phone(userRegistrationDTO.getPhone())
                 .gender(userRegistrationDTO.getGender())
@@ -44,5 +45,12 @@ public class UserService {
 
     public void delete(String userId){
         userRepository.deleteById(userId);
+    }
+
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+    public boolean existsByUsername(String username){
+        return userRepository.existsByUsername(username);
     }
 }
