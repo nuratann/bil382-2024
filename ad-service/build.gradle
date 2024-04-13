@@ -1,7 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4'
+    id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
+}
+
+ext {
+    springCloudVersion = "2023.0.0"
 }
 
 group = 'kg.buyers'
@@ -11,13 +15,40 @@ java {
     sourceCompatibility = '17'
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'org.postgresql:postgresql'
+    // https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
+    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '22.0.4'
+    // https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client
+    implementation group: 'org.jboss.resteasy', name: 'resteasy-client', version: '6.2.5.Final'
+    // https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jackson2-provider
+    implementation group: 'org.jboss.resteasy', name: 'resteasy-jackson2-provider', version: '6.2.5.Final'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
 
 tasks.named('test') {

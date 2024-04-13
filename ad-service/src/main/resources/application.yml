@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ad-service
+  datasource:
+    url: jdbc:postgresql://localhost:5051/ads-service
+    username: admin
+    password: admin
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
