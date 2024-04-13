@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserRegistrationDTO {
-    private String login;
+    private String username;
     private String firstName;
     private String lastName;
     private String birthDay;
@@ -16,7 +16,7 @@ public class UserRegistrationDTO {
 
     public KeycloakUserDTO toKeycloakUserDTO(){
         var dto = new KeycloakUserDTO();
-        dto.setUsername(this.login);
+        dto.setUsername(this.username);
         dto.setEmail(this.email);
         dto.setFirstName(this.firstName);
         dto.setLastName(this.lastName);

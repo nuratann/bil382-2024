@@ -18,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findById(@PathVariable Long id) {
+    public Optional<User> findById(@PathVariable String id) {
         return userRepository.findById(id);
     }
 
@@ -28,7 +28,8 @@ public class UserService {
 
     public User save(UserRegistrationDTO userRegistrationDTO, String KCid) {
         User user = User.builder()
-                .login(userRegistrationDTO.getLogin())
+                .id(KCid)
+                .username(userRegistrationDTO.getUsername())
                 .firstName(userRegistrationDTO.getFirstName())
                 .lastName(userRegistrationDTO.getLastName())
                 .birthDay(userRegistrationDTO.getBirthDay())
@@ -36,15 +37,12 @@ public class UserService {
                 .phone(userRegistrationDTO.getPhone())
                 .gender(userRegistrationDTO.getGender())
                 .avatarImg(null)
-                .KCid(KCid)
                 .build();
 
         return userRepository.save(user);
     }
 
-    public String delete(Long userId){
-        String KCid = userRepository.findById(userId).get().getKCid();
+    public void delete(String userId){
         userRepository.deleteById(userId);
-        return KCid;
     }
 }

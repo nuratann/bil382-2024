@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,9 @@ public class UserController {
         this.keycloakUserService = keycloakUserService;
     }
 
+    @CrossOrigin("*")
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
         Optional<User> optionalUser = userService.findById(id);
         return optionalUser.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -46,10 +48,22 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<User> deleteUser(@PathVariable Long userId){
-        String keycloakId = userService.delete(userId);
-        keycloakUserService.deleteUserById(keycloakId);
+    @PostMapping("/mass")
+    public ResponseEntity<List<User>> createUsers(@RequestBody List<UserRegistrationDTO> userRegistrationDTOs) {
+        List<User> saved = new ArrayList<>();
+        for(UserRegistrationDTO userRegistrationDTO : userRegistrationDTOs) {
+            var KCUser = keycloakUserService.createUser(userRegistrationDTO.toKeycloakUserDTO());
+            System.out.println(KCUser.getId());
+            User savedUser = userService.save(userRegistrationDTO, KCUser.getId());
+            saved.add(savedUser);
+        }
+        return new ResponseEntity<List<User>>(saved, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> deleteUser(@PathVariable String userId){
+        userService.delete(userId);
+        keycloakUserService.deleteUserById(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //TODO:updateUser, change password, avatarImg

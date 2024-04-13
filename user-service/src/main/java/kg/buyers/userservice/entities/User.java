@@ -13,10 +13,8 @@ import lombok.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String KCid;
-    private String login;
+    private String id;
+    private String username;
     private String firstName;
     private String lastName;
     private String birthDay;
