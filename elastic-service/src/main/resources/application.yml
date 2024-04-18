@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: elastic-service
+elastic:
+  host: localhost
+  port: 9200
+  apiKey: eyJ2ZXIiOiI4LjEzLjAiLCJhZHIiOlsiMTcyLjIxLjAuMjo5MjAwIl0sImZnciI6ImI0MWI2MTk5NDlhZDFjYTI5YmNjZGRmNWJhY2EzYWM5MTY3MWE4ODgxNTcxZjIyZWZkNGNkMDg0MzExOTdkNWIiLCJrZXkiOiJ4R19MNm80QlFqa3d1clBRbm1iWDo1aV9aSWF5a1JQSzVoeVdnbkQ1Wk53In0=
+  username: elastic
+  password: Admin123
+  cert-fingerprint: 16:B8:08:BA:F0:AE:F7:FC:01:E3:2D:DE:18:63:25:AB:30:67:D9:4F:27:A0:35:C8:6A:DF:1A:1A:1A:03:CC:DE

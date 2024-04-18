@@ -1,13 +1,13 @@
-package kg.buyers.searchservice;
+package kg.buyers.elasticservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SearchServiceApplication {
+public class ElasticServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SearchServiceApplication.class, args);
+        SpringApplication.run(ElasticServiceApplication.class, args);
     }
 
 }

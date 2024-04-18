@@ -1,10 +1,10 @@
-package kg.buyers.searchservice;
+package kg.buyers.elasticservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SearchServiceApplicationTests {
+class ElasticServiceApplicationTests {
 
     @Test
     void contextLoads() {

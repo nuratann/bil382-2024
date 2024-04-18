@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: search-service
-  data:
-    elasticsearch:
-      cluster-nodes: localhost:9200
