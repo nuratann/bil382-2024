@@ -4,6 +4,7 @@ import lombok.Builder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +29,14 @@ public class ProductServiceApplication {
         return httpSecurity
                 .authorizeHttpRequests(customizer -> customizer
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/api/v1/products/create").hasRole("SELLER")
+                        .requestMatchers(HttpMethod.GET,"/api/v1/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/products/").hasRole("SELLER")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/products/").hasRole("SELLER")
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/products/").hasRole("SELLER")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/reviews/").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/reviews/").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/comments/").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/comments/").hasRole("CUSTOMER")
                         .anyRequest().authenticated())
                 .build();
     }

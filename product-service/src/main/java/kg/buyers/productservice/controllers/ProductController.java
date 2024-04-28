@@ -1,7 +1,8 @@
 package kg.buyers.productservice.controllers;
 
+import kg.buyers.productservice.dto.ProductDTO;
 import kg.buyers.productservice.entities.Product;
-import kg.buyers.productservice.repositories.ProductRepository;
+import kg.buyers.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,28 +16,33 @@ import java.util.Optional;
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
-        return optionalProduct.map(product -> new ResponseEntity<>(product, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+        Optional<Product> optionalProduct = productService.findById(id);
+        return optionalProduct.map(
+                product ->
+                        new ResponseEntity<>(product, HttpStatus.OK))
+                        .orElseGet(() ->
+                                new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/")
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product savedProduct = productRepository.save(product);
+    @PostMapping("/")
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
+        Product savedProduct = productService.createProduct(productDTO);
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@RequestBody ProductDTO productDTO,@PathVariable String id){
+        Product updatedProduct = productService.updateProduct(productDTO,id);
+        if(updatedProduct==null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 }
