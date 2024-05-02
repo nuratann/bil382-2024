@@ -3,7 +3,6 @@ package kg.buyers.productservice.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,4 +16,6 @@ public class Category {
     private Integer productCount;
     @ManyToMany
     private Set<Brand> brands;
+    @ManyToMany
+    private Set<Filter> filters;
 }
