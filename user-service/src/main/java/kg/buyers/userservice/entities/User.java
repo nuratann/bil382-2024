@@ -3,6 +3,8 @@ package kg.buyers.userservice.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 
 @Getter
 @Setter
@@ -22,4 +24,16 @@ public class User {
     private String phone;
     private String gender;
     private String avatarImg;
+    @ManyToMany
+    @JoinTable(
+            name = "favorite",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> favorites;
+    @ManyToMany
+    @JoinTable(
+            name = "cart",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> cart;
 }

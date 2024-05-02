@@ -1,6 +1,7 @@
 package kg.buyers.userservice.controllers;
 
 import kg.buyers.userservice.dto.UserRegistrationDTO;
+import kg.buyers.userservice.entities.Product;
 import kg.buyers.userservice.entities.User;
 import kg.buyers.userservice.services.KeycloakUserService;
 import kg.buyers.userservice.services.UserService;
@@ -53,6 +54,13 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
+    @CrossOrigin("*")
+    @PutMapping("/{userId}")
+    public  ResponseEntity<User> updateUser(@RequestBody UserRegistrationDTO userRegistrationDTO, @PathVariable String userId){
+        return new ResponseEntity<>(userService.save(userRegistrationDTO,userId), HttpStatus.OK);
+    }
+
+    @CrossOrigin("*")
     @PostMapping("/mass")
     public ResponseEntity<List<User>> createUsers(@RequestBody List<UserRegistrationDTO> userRegistrationDTOs) {
         List<User> saved = new ArrayList<>();
@@ -65,6 +73,7 @@ public class UserController {
         return new ResponseEntity<List<User>>(saved, HttpStatus.CREATED);
     }
 
+    @CrossOrigin("*")
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteUser(@PathVariable String userId){
         userService.delete(userId);
@@ -76,4 +85,53 @@ public class UserController {
 //    public ResponseEntity<User> updateUser(@RequestBody UserRegistrationDTO userRegistrationDTO){
 //
 //    }
+
+    @CrossOrigin("*")
+    @PostMapping("/{userId}/cart")
+    public ResponseEntity<Product> addToCart(@PathVariable String userId, @RequestBody Product product){
+        var user = userService.findById(userId).orElse(null);
+        if(user==null)return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        user.getCart().add(product);
+        return new ResponseEntity<>(product,HttpStatus.CREATED);
+    }
+    @CrossOrigin("*")
+    @GetMapping("/{userId}/cart")
+    public ResponseEntity<Set<Product>> getCart(@PathVariable String  userId){
+        var user = userService.findById(userId).orElse(null);
+        if(user==null)return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user.getCart(),HttpStatus.OK);
+    }
+
+    @CrossOrigin("*")
+    @DeleteMapping("/{userId}/cart")
+    public ResponseEntity<Product> deleteCartItem(@PathVariable String  userId, @RequestBody Product product){
+        var user = userService.findById(userId).orElse(null);
+        if(user==null)return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        user.getCart().remove(product);
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+    @CrossOrigin("*")
+    @PostMapping("/{userId}/favorites")
+    public ResponseEntity<Product> addToFavorites(@PathVariable String userId, @RequestBody Product product){
+        var user = userService.findById(userId).orElse(null);
+        if(user==null)return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        user.getFavorites().add(product);
+        return new ResponseEntity<>(product,HttpStatus.CREATED);
+    }
+    @CrossOrigin("*")
+    @GetMapping("/{userId}/favorites")
+    public ResponseEntity<Set<Product>> getFavorites(@PathVariable String  userId){
+        var user = userService.findById(userId).orElse(null);
+        if(user==null)return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user.getFavorites(),HttpStatus.OK);
+    }
+
+    @CrossOrigin("*")
+    @DeleteMapping("/{userId}/favorites")
+    public ResponseEntity<Product> deleteFavoritesItem(@PathVariable String  userId, @RequestBody Product product){
+        var user = userService.findById(userId).orElse(null);
+        if(user==null)return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        user.getFavorites().remove(product);
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
 }

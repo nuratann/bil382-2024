@@ -17,7 +17,8 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String category;
+    @ManyToOne
+    private Category category;
     private String sellerId;
     @Column(columnDefinition = "TEXT")
     private String mediaLinks;//Json String
