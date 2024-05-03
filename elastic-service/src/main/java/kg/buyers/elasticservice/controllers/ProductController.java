@@ -3,6 +3,7 @@ package kg.buyers.elasticservice.controllers;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import kg.buyers.elasticservice.entities.Product;
 import kg.buyers.elasticservice.entities.Query;
+import kg.buyers.elasticservice.entities.Suggestion;
 import kg.buyers.elasticservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class ProductController {
     }
 
     @PostMapping("/query/bulk")
-    public ResponseEntity<Query> bulkQueries(@RequestBody List<Query> queries) throws IOException {
+    public ResponseEntity<Suggestion> bulkQueries(@RequestBody List<Suggestion> queries) throws IOException {
         productService.queryBulk(queries);
         return new ResponseEntity<>(null,HttpStatus.CREATED);
     }
@@ -63,7 +64,7 @@ public class ProductController {
     }
     @CrossOrigin(origins = "*")
     @GetMapping("/suggest")
-    public List<Query> suggestQuery(@RequestParam String query) throws IOException {
+    public List<Suggestion> suggestQuery(@RequestParam String query) throws IOException {
         return productService.suggestQuery(query);
     }
 }

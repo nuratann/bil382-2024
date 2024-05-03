@@ -1,0 +1,36 @@
+{
+  "script": {
+    "lang": "mustache",
+    "source": {
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "query_string": {
+                "query": "{{search_string}}",
+                "fields": ["title", "description", "*"]
+              }
+            }
+          ],
+          "filter": [
+            {{#filters}}
+            {
+              "term": {
+                "{{field}}": "{{value}}"
+              }
+            },
+            {{/filters}}
+            {
+              "range": {
+                "price": {
+                  "gte": {{price_range.min}},
+                  "lte": {{price_range.max}}
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

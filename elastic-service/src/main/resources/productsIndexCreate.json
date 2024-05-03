@@ -1,0 +1,92 @@
+{
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "russian_ngram_analyzer"
+      },
+      "description": {
+        "type": "text",
+        "analyzer": "russian_ngram_analyzer"
+      },
+      "rating": {
+        "type": "float"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "orders": {
+        "type": "integer"
+      },
+      "brand": {
+        "type": "keyword"
+      },
+      "premium": {
+        "type": "boolean"
+      },
+      "sale": {
+        "type": "boolean"
+      },
+      "colors": {
+        "type": "keyword"
+      },
+      "seller": {
+        "type": "keyword"
+      },
+      "discounted": {
+        "type": "boolean"
+      },
+      "delivery": {
+        "type": "integer"
+      },
+      "original": {
+        "type": "boolean"
+      },
+      "pointsForReview": {
+        "type": "boolean"
+      },
+      "madeCountry": {
+        "type": "keyword"
+      },
+      "type": {
+        "type": "keyword"
+      },
+      "bestSeller": {
+        "type": "boolean"
+      },
+      "quantity": {
+        "type": "integer"
+      },
+      "price": {
+        "type": "float"
+      },
+      "old_price": {
+        "type": "float"
+      }
+    }
+  },
+  "settings": {
+    "analysis": {
+      "filter": {
+        "russian_ngram_filter": {
+          "type": "ngram",
+          "min_gram": 2,
+          "max_gram": 20
+        }
+      },
+      "analyzer": {
+        "russian_ngram_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "russian_ngram_filter"
+          ]
+        }
+      }
+    }
+  }
+}

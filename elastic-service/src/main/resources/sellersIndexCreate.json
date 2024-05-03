@@ -1,0 +1,47 @@
+{
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "russian_ngram_analyzer"
+      },
+      "rating": {
+        "type": "float"
+      },
+      "orders": {
+        "type": "integer"
+      },
+      "premium": {
+        "type": "boolean"
+      },
+      "img": {
+        "type": "keyword",
+        "index": false
+      }
+    }
+  },
+  "settings": {
+    "analysis": {
+      "filter": {
+        "russian_ngram_filter": {
+          "type": "ngram",
+          "min_gram": 2,
+          "max_gram": 20
+        }
+      },
+      "analyzer": {
+        "russian_ngram_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "russian_ngram_filter"
+          ]
+        }
+      }
+    }
+  }
+}

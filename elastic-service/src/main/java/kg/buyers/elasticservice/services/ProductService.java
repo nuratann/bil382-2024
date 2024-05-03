@@ -1,9 +1,8 @@
 package kg.buyers.elasticservice.services;
 
-import co.elastic.clients.elasticsearch.core.GetResponse;
 import kg.buyers.elasticservice.entities.Product;
-import kg.buyers.elasticservice.entities.Query;
-import kg.buyers.elasticservice.repositories.ProductRepository;
+import kg.buyers.elasticservice.entities.Suggestion;
+import kg.buyers.elasticservice.repositories.ProductRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +11,10 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
+    private final ProductRepositoryImpl productRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepositoryImpl productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -27,8 +26,8 @@ public class ProductService {
         productRepository.bulk(products);
     }
 
-    public void queryBulk(List<Query> queries) throws IOException {
-        productRepository.queryBulk(queries);
+    public void queryBulk(List<Suggestion> queries) throws IOException {
+        productRepository.suggestionBulk(queries);
     }
 
     public Product findById(String id) throws IOException {
@@ -43,8 +42,8 @@ public class ProductService {
         return productRepository.searchByString(query);
     }
 
-    public List<Query> suggestQuery(String prefix) throws IOException{
-        return productRepository.suggestQuery(prefix);
+    public List<Suggestion> suggestQuery(String prefix) throws IOException{
+        return productRepository.suggest(prefix);
     }
 
 }

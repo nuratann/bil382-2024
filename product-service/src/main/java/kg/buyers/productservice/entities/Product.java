@@ -26,6 +26,7 @@ public class Product {
     private String title;
     private String description; //HTML code
     private Float rating;
+    private Integer orders;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
     @Column(columnDefinition = "TEXT")

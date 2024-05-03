@@ -1,0 +1,22 @@
+{
+  "script": {
+    "lang": "mustache",
+    "source": {
+      "_source": "suggests",
+      "suggest": {
+        "my-suggest": {
+          "prefix": "{{prefix}}",
+          "completion": {
+            "field": "suggest",
+            "fuzzy": {
+              "fuzziness": 1,
+              "min_length": 3
+            },
+            "size": 5,
+            "skip_duplicates": true
+          }
+        }
+      }
+    }
+  }
+}
