@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ad-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ad-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/elastic-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/elastic-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/eureka-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/eureka-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kg.buyers.product-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kg.buyers.product-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kg.buyers.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kg.buyers.user-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/product-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/product-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommendation-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/recommendation-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" />

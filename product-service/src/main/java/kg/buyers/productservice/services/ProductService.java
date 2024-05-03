@@ -1,6 +1,7 @@
 package kg.buyers.productservice.services;
 import kg.buyers.productservice.dto.ProductDTO;
 import kg.buyers.productservice.entities.Product;
+import kg.buyers.productservice.repositories.ICategoryRepository;
 import kg.buyers.productservice.repositories.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ import java.util.Optional;
 @Service
 public class ProductService {
     private final IProductRepository iProductRepository;
+    private final ICategoryRepository iCategoryRepository;
     @Autowired
-    public ProductService(IProductRepository iProductRepository){
+    public ProductService(IProductRepository iProductRepository, ICategoryRepository iCategoryRepository){
         this.iProductRepository=iProductRepository;
+        this.iCategoryRepository = iCategoryRepository;
     }
 
 
@@ -23,7 +26,7 @@ public class ProductService {
     public Product createProduct(ProductDTO productDTO){
         Product product = Product.builder()
                 .sellerId(productDTO.getSellerId())
-                .category(productDTO.getCategory())
+                .category(iCategoryRepository.findCategoryByName(productDTO.getCategory()).orElse(null))
                 .mediaLinks(productDTO.getMediaLinks())
                 .title(productDTO.getTitle())
                 .description(productDTO.getDescription())
@@ -41,7 +44,7 @@ public class ProductService {
     public Product updateProduct(ProductDTO productDTO, String id) {
         Product product = iProductRepository.findById(id).orElse(null);
         if(product==null)return null;
-        product.setCategory(productDTO.getCategory());
+        product.setCategory(iCategoryRepository.findCategoryByName(productDTO.getCategory()).orElse(null));
         product.setMediaLinks(productDTO.getMediaLinks());
         product.setTitle(productDTO.getTitle());
         product.setDescription(productDTO.getDescription());

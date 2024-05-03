@@ -29,6 +29,8 @@ public class ProductServiceApplication {
         return httpSecurity
                 .authorizeHttpRequests(customizer -> customizer
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/v1/products/").hasRole("SELLER")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/products/").hasRole("SELLER")
