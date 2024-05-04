@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserRegistrationDTO {
+    private String id;
     private String username;
     private String firstName;
     private String lastName;
@@ -15,14 +16,4 @@ public class UserRegistrationDTO {
     private String conflictField;
     //private String avatarImg;
 
-    public KeycloakUserDTO toKeycloakUserDTO(){
-        var dto = new KeycloakUserDTO();
-        dto.setUsername(this.username);
-        dto.setEmail(this.email);
-        dto.setFirstName(this.firstName);
-        dto.setLastName(this.lastName);
-        dto.setPassword(this.password);
-
-        return dto;
-    }
 }

@@ -1,4 +1,4 @@
-package kg.buyers.userservice.dto;
+package kg.buyers.authservice.dto;
 
 import lombok.Data;
 

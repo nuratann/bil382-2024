@@ -1,6 +1,5 @@
-package kg.buyers.userservice.config;
+package kg.buyers.authservice.config;
 
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -17,23 +16,23 @@ public class KeycloakConfig {
     @Value("${keycloak.realm}")
     private String realm;
 
-    @Value("${keycloak.clientId}")
+    @Value("${keycloak.adminClientId}")
     private String clientId;
 
-    @Value("${keycloak.credentials.secret}")
+    @Value("${keycloak.credentials.adminSecret}")
     private String clientSecret;
 
     @Bean
     public Keycloak keycloak() {
         //return Keycloak.getInstance("http://localhost:5052","buyers_realm","admin","admin","admin-cli");
         return KeycloakBuilder.builder()
-                .serverUrl("http://localhost:5052")
-                .realm("buyers_realm")
+                .serverUrl(serverUrl)
+                .realm(realm)
                 .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
 //                .username("admin")
 //                .password("admin")
-                .clientId("admin-cli")
-                .clientSecret("bA27Tt7jfWoeS7PUJVQzSrxwAGe4vSI7")
+                .clientId(clientId)
+                .clientSecret(clientSecret)
                 .build();
     }
 }

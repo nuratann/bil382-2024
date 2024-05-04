@@ -1,19 +1,15 @@
 spring:
   application:
     name: auth-service
-  datasource:
-    url: jdbc:postgresql://localhost:5051/accounts
-    username: admin
-    password: admin
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
 
 server:
   port: 3201
 
-jwt:
-  SECRET_KEY: a5c85d650c55db97d98cd14e624e728137e867e22da9290c54ab045e01b04c36
+keycloak:
+  auth-server-url: http://localhost:5052
+  realm: buyers_realm
+  clientId: springsecurity
+  adminClientId: admin-cli
+  credentials:
+    adminSecret: bA27Tt7jfWoeS7PUJVQzSrxwAGe4vSI7
+    secret: 63B0GkzMnnw7VgYsVqapaWrwOzKgXmRF

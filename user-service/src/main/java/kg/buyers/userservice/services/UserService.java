@@ -27,9 +27,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User save(UserRegistrationDTO userRegistrationDTO, String KCid) {
+    public User save(UserRegistrationDTO userRegistrationDTO) {
+        if(userRepository.existsByEmail(userRegistrationDTO.getEmail()) || userRepository.existsByUsername(userRegistrationDTO.getUsername())){
+            return null;
+        }
         User user = User.builder()
-                .id(KCid)
+                .id(userRegistrationDTO.getId())
                 .username(userRegistrationDTO.getUsername())
                 .firstName(userRegistrationDTO.getFirstName())
                 .lastName(userRegistrationDTO.getLastName())

@@ -3,7 +3,6 @@ package kg.buyers.userservice.controllers;
 import kg.buyers.userservice.dto.UserRegistrationDTO;
 import kg.buyers.userservice.entities.Product;
 import kg.buyers.userservice.entities.User;
-import kg.buyers.userservice.services.KeycloakUserService;
 import kg.buyers.userservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +16,10 @@ import java.util.*;
 public class UserController {
 
     private final UserService userService;
-    private  final KeycloakUserService keycloakUserService;
 
     @Autowired
-    public UserController(UserService userService, KeycloakUserService keycloakUserService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.keycloakUserService = keycloakUserService;
     }
 
     @CrossOrigin("*")
@@ -41,23 +38,15 @@ public class UserController {
     @CrossOrigin("*")
     @PostMapping("/")
     public ResponseEntity<Object> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
-        if (userService.existsByEmail(userRegistrationDTO.getEmail())) {
-            userRegistrationDTO.setConflictField("email");
-            return new ResponseEntity<>(userRegistrationDTO,HttpStatus.CONFLICT);
-        }
-        if (userService.existsByUsername(userRegistrationDTO.getUsername())) {
-            userRegistrationDTO.setConflictField("username");
-            return new ResponseEntity<>(userRegistrationDTO,HttpStatus.CONFLICT);
-        }
-        var KCUser = keycloakUserService.createUser(userRegistrationDTO.toKeycloakUserDTO());
-        User savedUser = userService.save(userRegistrationDTO,KCUser.getId());
+        User savedUser = userService.save(userRegistrationDTO);
+        if(savedUser==null) return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @CrossOrigin("*")
     @PutMapping("/{userId}")
     public  ResponseEntity<User> updateUser(@RequestBody UserRegistrationDTO userRegistrationDTO, @PathVariable String userId){
-        return new ResponseEntity<>(userService.save(userRegistrationDTO,userId), HttpStatus.OK);
+        return new ResponseEntity<>(userService.save(userRegistrationDTO), HttpStatus.OK);
     }
 
     @CrossOrigin("*")
@@ -65,19 +54,16 @@ public class UserController {
     public ResponseEntity<List<User>> createUsers(@RequestBody List<UserRegistrationDTO> userRegistrationDTOs) {
         List<User> saved = new ArrayList<>();
         for(UserRegistrationDTO userRegistrationDTO : userRegistrationDTOs) {
-            var KCUser = keycloakUserService.createUser(userRegistrationDTO.toKeycloakUserDTO());
-            System.out.println(KCUser.getId());
-            User savedUser = userService.save(userRegistrationDTO, KCUser.getId());
+            User savedUser = userService.save(userRegistrationDTO);
             saved.add(savedUser);
         }
-        return new ResponseEntity<List<User>>(saved, HttpStatus.CREATED);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
     @CrossOrigin("*")
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteUser(@PathVariable String userId){
         userService.delete(userId);
-        keycloakUserService.deleteUserById(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //TODO:updateUser, change password, avatarImg

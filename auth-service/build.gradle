@@ -24,20 +24,26 @@ repositories {
 
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    //testImplementation 'org.springframework.security:spring-security-test'
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.5'
+    // https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
+    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '22.0.4'
+    // https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client
+    implementation group: 'org.jboss.resteasy', name: 'resteasy-client', version: '6.2.5.Final'
+    // https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jackson2-provider
+    implementation group: 'org.jboss.resteasy', name: 'resteasy-jackson2-provider', version: '6.2.5.Final'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
 
 
 }
