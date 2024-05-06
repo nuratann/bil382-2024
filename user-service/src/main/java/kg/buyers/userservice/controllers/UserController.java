@@ -29,7 +29,7 @@ public class UserController {
         return name.equals(user.getUsername());
     }
 
-    @CrossOrigin("*")
+
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable String userId) {
         User user = userService.findById(userId);
@@ -38,14 +38,14 @@ public class UserController {
         else return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
-    @CrossOrigin("*")
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/")
     public List<User> getAllUsers() {
         return userService.findAll();
     }
 
-    @CrossOrigin("*")
+
     @PostMapping("/")
     public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         User savedUser = userService.save(userRegistrationDTO);
@@ -53,13 +53,13 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-    @CrossOrigin("*")
+
     @PostMapping("/{userId}")
     public  ResponseEntity<User> updateUser(@RequestBody UserRegistrationDTO userRegistrationDTO, @PathVariable String userId){
         return new ResponseEntity<>(userService.update(userRegistrationDTO), HttpStatus.OK);
     }
 
-    @CrossOrigin("*")
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/bulk")
     public ResponseEntity<List<User>> createUsers(@RequestBody List<UserRegistrationDTO> userRegistrationDTOs) {
@@ -72,7 +72,7 @@ public class UserController {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @CrossOrigin("*")
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteUser(@PathVariable String userId){
         User user = userService.findById(userId);
@@ -84,7 +84,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/{userId}")
     public ResponseEntity<User> deleteUserByAdmin(@PathVariable String userId) {
