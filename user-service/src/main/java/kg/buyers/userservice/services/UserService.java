@@ -19,8 +19,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findById(@PathVariable String id) {
-        return userRepository.findById(id);
+    public User findById(@PathVariable String id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     public List<User> findAll(){
@@ -31,7 +31,12 @@ public class UserService {
         if(userRepository.existsByEmail(userRegistrationDTO.getEmail()) || userRepository.existsByUsername(userRegistrationDTO.getUsername())){
             return null;
         }
-        User user = User.builder()
+
+        return userRepository.save(userDtoToUser(userRegistrationDTO));
+    }
+
+    private User userDtoToUser(UserRegistrationDTO userRegistrationDTO){
+        return User.builder()
                 .id(userRegistrationDTO.getId())
                 .username(userRegistrationDTO.getUsername())
                 .firstName(userRegistrationDTO.getFirstName())
@@ -42,8 +47,12 @@ public class UserService {
                 .gender(userRegistrationDTO.getGender())
                 .avatarImg(null)
                 .build();
+    }
 
-        return userRepository.save(user);
+    public void save(User user) {userRepository.save(user);}
+
+    public User update(UserRegistrationDTO userRegistrationDTO){
+        return userRepository.save(userDtoToUser(userRegistrationDTO));
     }
 
     public void delete(String userId){
