@@ -22,10 +22,3 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     enabled: true
-
-keycloak:
-  auth-server-url: http://localhost:5052/
-  realm: buyers-realm
-  clientId: admin-cli
-  credentials:
-    secret: bA27Tt7jfWoeS7PUJVQzSrxwAGe4vSI7

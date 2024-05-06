@@ -8,3 +8,12 @@ elastic:
   username: elastic
   password: Admin123
   cert-fingerprint: 16:B8:08:BA:F0:AE:F7:FC:01:E3:2D:DE:18:63:25:AB:30:67:D9:4F:27:A0:35:C8:6A:DF:1A:1A:1A:03:CC:DE
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true

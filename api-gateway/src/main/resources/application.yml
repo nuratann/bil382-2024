@@ -16,6 +16,14 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/v1/products/**
+        - id: auth-service-route
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/v1/auth/**
+        - id: elastic-service-route
+          uri: lb://elastic-service
+          predicates:
+            - Path=/api/v1/search/**
 server:
   port: 8081
 eureka:

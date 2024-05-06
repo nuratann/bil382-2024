@@ -8,6 +8,10 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.23'
 }
 
+ext {
+    springCloudVersion = "2023.0.1"
+}
+
 group = 'kg.buyers'
 version = '0.0.1-SNAPSHOT'
 
@@ -25,8 +29,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
 
 tasks.withType(KotlinCompile) {
