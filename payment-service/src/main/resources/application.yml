@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: payment-service
+stripe:
+  secret:
+    key: sk_test_51PJeSX08MXO6we99UGOGzz5X30Rg2qxROXhQoSgDzG6QqadV7S3XC4ONXAQkWSvVZhSjh9g7knBftxcbMRDBKZDz00Icnr4Pan

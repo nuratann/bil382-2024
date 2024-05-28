@@ -15,6 +15,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -29,7 +30,7 @@ public class UserController {
         return name.equals(user.getUsername());
     }
 
-
+//ushul func testirovanie kildim
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable String userId) {
         User user = userService.findById(userId);
@@ -45,7 +46,7 @@ public class UserController {
         return userService.findAll();
     }
 
-
+    //ushul func testirovanie kildim
     @PostMapping("/")
     public ResponseEntity<User> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         User savedUser = userService.save(userRegistrationDTO);

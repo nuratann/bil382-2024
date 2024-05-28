@@ -1,5 +1,7 @@
 package kg.buyers.productservice.services;
+import jakarta.persistence.EntityNotFoundException;
 import kg.buyers.productservice.dto.ProductDTO;
+import kg.buyers.productservice.entities.Category;
 import kg.buyers.productservice.entities.Product;
 import kg.buyers.productservice.repositories.ICategoryRepository;
 import kg.buyers.productservice.repositories.IProductRepository;
@@ -9,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,6 +59,22 @@ public class ProductService {
         product.setDeliveryDays(productDTO.getDeliveryDays());
         product.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
         return iProductRepository.save(product);
+    }
+
+    public List<String> getCategoryPath(Integer categoryId) {
+        List<String> path = new ArrayList<>();
+        Category category = iCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + categoryId));
+        buildCategoryPath(category, path);
+        Collections.reverse(path);  // Оборачиваем список для получения пути от корневой категории до текущей
+        return path;
+    }
+
+    private void buildCategoryPath(Category category, List<String> path) {
+        path.add(category.getName());
+        if (category.getParent() != null) {
+            buildCategoryPath(iCategoryRepository.findById(category.getParent()).orElse(null), path);
+        }
     }
 
     public Optional<Product> findById(String id){

@@ -8,11 +8,13 @@ server:
 keycloak:
   auth-server-url: http://localhost:5052
   realm: buyers_realm
-  clientId: springsecurity
+  clientId: spring
   adminClientId: admin-cli
   credentials:
-    adminSecret: bA27Tt7jfWoeS7PUJVQzSrxwAGe4vSI7
-    secret: 63B0GkzMnnw7VgYsVqapaWrwOzKgXmRF
+    username: admin
+    password: admin
+    adminSecret: 7JLOvVVCyvWqX8l3XOOFzxabmRmbmlof
+    secret: ICbjD4csW4FwZxy3MH5Bmz56kHKDoPgA
 eureka:
   client:
     service-url:
@@ -22,3 +24,5 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     enabled: true
+
+domain: http://localhost

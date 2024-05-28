@@ -18,8 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
-@Service
-@Slf4j
+//@Service
+//@Slf4j
 public class KeycloakService {
 
     @Value("${keycloak.auth-server-url}")

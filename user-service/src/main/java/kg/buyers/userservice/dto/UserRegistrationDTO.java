@@ -12,8 +12,8 @@ public class UserRegistrationDTO {
     private String email;
     private String phone;
     private String gender;
-    private String password;
-    private String conflictField;
-    //private String avatarImg;
+//    private String password;
+//    private String conflictField;
+    private String avatarImg;
 
 }

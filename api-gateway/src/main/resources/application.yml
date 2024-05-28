@@ -3,6 +3,19 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
       discovery:
         locator:
           enabled: true
@@ -16,6 +29,10 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/v1/products/**
+        - id: product-service-route-categories
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/categories/**
         - id: auth-service-route
           uri: lb://auth-service
           predicates:
@@ -24,6 +41,10 @@ spring:
           uri: lb://elastic-service
           predicates:
             - Path=/api/v1/search/**
+        - id: media-store-route
+          uri: lb://media-store
+          predicates:
+            - Path=/api/v1/media/**
 server:
   port: 8081
 eureka:

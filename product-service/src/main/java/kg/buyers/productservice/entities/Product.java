@@ -25,6 +25,9 @@ public class Product {
     //mediaLinks:[mediaLink:{type:"img","url"},mediaLink:{type:"vid","url"}]
     private String title;
     private String description; //HTML code
+    private Double price;
+    private Integer quantity;
+    private Double oldPrice;
     private Float rating;
     private Integer orders;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

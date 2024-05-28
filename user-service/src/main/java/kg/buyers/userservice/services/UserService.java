@@ -45,7 +45,7 @@ public class UserService {
                 .email(userRegistrationDTO.getEmail())
                 .phone(userRegistrationDTO.getPhone())
                 .gender(userRegistrationDTO.getGender())
-                .avatarImg(null)
+                .avatarImg(userRegistrationDTO.getAvatarImg())
                 .build();
     }
 

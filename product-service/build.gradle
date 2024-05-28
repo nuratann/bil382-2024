@@ -50,3 +50,33 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        exceptionFormat "full"
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        showStandardStreams true // это включит вывод системных потоков (System.out, System.err)
+    }
+
+    afterTest { descriptor, result ->
+        def color
+        def status = result.resultType
+        switch (status) {
+            case org.gradle.api.tasks.testing.TestResult.ResultType.SUCCESS:
+                color = "\u001B[32m" // зеленый
+                break
+            case org.gradle.api.tasks.testing.TestResult.ResultType.FAILURE:
+                color = "\u001B[31m" // красный
+                break
+            case org.gradle.api.tasks.testing.TestResult.ResultType.SKIPPED:
+                color = "\u001B[33m" // желтый
+                break
+        }
+        println "${color}${descriptor.name} ${status}\u001B[0m"
+    }
+}
+

@@ -3,10 +3,12 @@ package kg.buyers.productservice.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue

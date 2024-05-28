@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class KeycloakConfig {
 
     @Value("${keycloak.auth-server-url}")
@@ -27,7 +27,7 @@ public class KeycloakConfig {
         //return Keycloak.getInstance("http://localhost:5052","buyers_realm","admin","admin","admin-cli");
         return KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
-                .realm(realm)
+                .realm("master")
                 .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
 //                .username("admin")
 //                .password("admin")

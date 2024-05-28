@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Configuration
@@ -36,7 +37,7 @@ public class SecurityConfig {
         converter.setPrincipalClaimName("preferred_username");
         converter.setJwtGrantedAuthoritiesConverter(jwt -> {
             var authorities = jwtGrantedAuthoritiesConverter.convert(jwt);
-            var roles = jwt.getClaimAsStringList("spring_security_roles");
+            var roles = (List<String>)jwt.getClaimAsMap("realm_access").get("roles");
             return Stream.concat(authorities.stream(),
                             roles.stream()
                                     .filter(role -> role.startsWith("ROLE_"))

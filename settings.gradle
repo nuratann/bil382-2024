@@ -1,1 +1,3 @@
 rootProject.name = 'buyers'
+include 'payment-service'
+
