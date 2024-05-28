@@ -29,7 +29,7 @@ public class MediaStoreApplication {
     public ResponseEntity<Map<String, String>> uploadPhoto(@RequestParam("file") MultipartFile file, @PathVariable String productId) {
         try {
             // Create directory if not exists
-            File directory = new File(productId);
+            File directory = new File("media/"+productId);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -54,7 +54,7 @@ public class MediaStoreApplication {
     @GetMapping("/photo/{productId}/{photoId}")
     public ResponseEntity<byte[]> getPhoto(@PathVariable String productId, @PathVariable String photoId) {
         try {
-            File file = new File(productId, photoId);
+            File file = new File("media/"+productId+"/"+photoId);
             if (file.exists()) {
                 byte[] data = org.apache.commons.io.FileUtils.readFileToByteArray(file);
                 return ResponseEntity.ok(data);
@@ -70,7 +70,7 @@ public class MediaStoreApplication {
     @DeleteMapping("/delete/{productId}/{photoId}")
     public ResponseEntity<String> deletePhoto(@PathVariable String productId, @PathVariable String photoId) {
         try {
-            File file = new File(productId, photoId);
+            File file = new File("media/"+productId+"/"+photoId);
             if (file.exists()) {
                 file.delete();
                 return ResponseEntity.ok("Photo deleted successfully. ID: " + photoId);
