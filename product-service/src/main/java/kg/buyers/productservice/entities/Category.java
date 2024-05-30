@@ -18,6 +18,6 @@ public class Category {
     private Integer productCount;
     @ManyToMany
     private Set<Brand> brands;
-    @ManyToMany
-    private Set<Filter> filters;
+    @Column(columnDefinition = "TEXT")
+    private String filters;
 }

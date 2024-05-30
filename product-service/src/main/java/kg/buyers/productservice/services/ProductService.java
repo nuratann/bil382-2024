@@ -28,37 +28,38 @@ public class ProductService {
 
 
     @Transactional
-    public Product createProduct(ProductDTO productDTO){
+    public Product initProduct(String sellerId){
         Product product = Product.builder()
-                .sellerId(productDTO.getSellerId())
-                .category(iCategoryRepository.findCategoryByName(productDTO.getCategory()).orElse(null))
-                .mediaLinks(productDTO.getMediaLinks())
-                .title(productDTO.getTitle())
-                .description(productDTO.getDescription())
-                .options(productDTO.getOptions())
-                .specs(productDTO.getSpecs())
-                .stock(productDTO.getStock())
-                .deliveryDays(productDTO.getDeliveryDays())
+                .sellerId(sellerId)
+                .category(iCategoryRepository.findCategoryByName("Общая").orElse(null))
+                .mediaLinks("[]")
+                .title("")
+                .description("")
+                .options("[{\"title\": \"\", \"count\": \"\", \"price\": \"\"}]")
+                .specs("[]")
+                .stock(0)
+                .deliveryDays(0)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .updatedDate(Timestamp.valueOf(LocalDateTime.now()))
+                .isActive(false)
+                .price(0.0)
+                .oldPrice(0.0)
+                .weight(0.0)
+                .orders(0)
+                .rating(0.0f)
+                .reviews(new ArrayList<>())
+                .promotions("[]")
                 .build();
         return iProductRepository.save(product);
     }
 
+
     @Transactional
-    public Product updateProduct(ProductDTO productDTO, String id) {
+    public Product updateProduct(Product new_product, String id) {
         Product product = iProductRepository.findById(id).orElse(null);
         if(product==null)return null;
-        product.setCategory(iCategoryRepository.findCategoryByName(productDTO.getCategory()).orElse(null));
-        product.setMediaLinks(productDTO.getMediaLinks());
-        product.setTitle(productDTO.getTitle());
-        product.setDescription(productDTO.getDescription());
-        product.setOptions(productDTO.getOptions());
-        product.setSpecs(productDTO.getSpecs());
-        product.setStock(productDTO.getStock());
-        product.setDeliveryDays(productDTO.getDeliveryDays());
-        product.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
-        return iProductRepository.save(product);
+        new_product.setActive(true);
+        return iProductRepository.save(new_product);
     }
 
     public List<String> getCategoryPath(Integer categoryId) {

@@ -24,10 +24,11 @@ public class Product {
     private String mediaLinks;//Json String
     //mediaLinks:[mediaLink:{type:"img","url"},mediaLink:{type:"vid","url"}]
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String description; //HTML code
     private Double price;
-    private Integer quantity;
     private Double oldPrice;
+    private Double weight;
     private Float rating;
     private Integer orders;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -45,4 +46,5 @@ public class Product {
     private Integer deliveryDays;
     private Timestamp createdDate;
     private Timestamp updatedDate;
+    private boolean isActive;
 }

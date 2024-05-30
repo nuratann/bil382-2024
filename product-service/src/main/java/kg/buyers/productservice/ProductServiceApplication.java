@@ -23,41 +23,5 @@ public class ProductServiceApplication {
         SpringApplication.run(ProductServiceApplication.class, args);
     }
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-        return httpSecurity
-                .authorizeHttpRequests(customizer -> customizer
-                        .requestMatchers("/error").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/v3/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/v1/products/").hasRole("SELLER")
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/products/").hasRole("SELLER")
-                        .requestMatchers(HttpMethod.DELETE,"/api/v1/products/").hasRole("SELLER")
-                        .requestMatchers(HttpMethod.POST,"/api/v1/reviews/").hasRole("CUSTOMER")
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/reviews/").hasRole("CUSTOMER")
-                        .requestMatchers(HttpMethod.POST,"/api/v1/comments/").hasRole("CUSTOMER")
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/comments/").hasRole("CUSTOMER")
-                        .anyRequest().authenticated())
-                .build();
-    }
 
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter(){
-        var converter = new JwtAuthenticationConverter();
-        var jwtGrantedAuthoritiesConverter =  new JwtGrantedAuthoritiesConverter();
-        converter.setPrincipalClaimName("preferred_username");
-        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            var authorities = jwtGrantedAuthoritiesConverter.convert(jwt);
-            var roles = jwt.getClaimAsStringList("spring_security_roles");
-            return Stream.concat(authorities.stream(),
-                        roles.stream()
-                                .filter(role -> role.startsWith("ROLE_"))
-                                .map(SimpleGrantedAuthority::new)
-                                .map(GrantedAuthority.class::cast))
-                    .toList();
-        });
-        return converter;
-    }
 }

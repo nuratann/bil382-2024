@@ -46,25 +46,26 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
-        Product savedProduct = productService.createProduct(productDTO);
+    public ResponseEntity<Product> createProduct(@RequestBody String sellerId) {
+        Product savedProduct = productService.initProduct(sellerId);
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/bulk")
-    public ResponseEntity<List<Product>> createProducts(@RequestBody List<ProductDTO> productDTOS){
-        List<Product> saved = new ArrayList<>();
-        productDTOS.forEach(productDTO -> {
-            Product product = productService.createProduct(productDTO);
-            saved.add(product);
-        });
-        return new ResponseEntity<>(saved,HttpStatus.CREATED);
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductDTO productDTO,@PathVariable String id){
-        Product updatedProduct = productService.updateProduct(productDTO,id);
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PostMapping("/bulk")
+//    public ResponseEntity<List<Product>> createProducts(@RequestBody List<ProductDTO> productDTOS){
+//        List<Product> saved = new ArrayList<>();
+//        productDTOS.forEach(productDTO -> {
+//            Product product = productService.createProduct(productDTO);
+//            saved.add(product);
+//        });
+//        return new ResponseEntity<>(saved,HttpStatus.CREATED);
+//    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product,@PathVariable String id){
+        Product updatedProduct = productService.updateProduct(product,id);
         if(updatedProduct==null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }

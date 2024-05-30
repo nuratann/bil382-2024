@@ -1,7 +1,12 @@
 package kg.buyers.productservice.dto;
 
 import jakarta.persistence.*;
+import kg.buyers.productservice.entities.Category;
+import kg.buyers.productservice.entities.Review;
 import lombok.Data;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 
 @Data
@@ -20,4 +25,8 @@ public class ProductDTO {
     //specs:[spec:{title:"Емкость аккумулятора",value:"5000Mah"}]
     private Integer stock;
     private Integer deliveryDays;
+
+    private Double price;
+    private Integer quantity;
+    private Double oldPrice;
 }
