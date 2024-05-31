@@ -62,14 +62,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/message-service" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/message-service" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/notification-service" />
         <option name="modules">
           <set>
@@ -98,6 +90,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/user-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/websocket-service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/websocket-service" />
           </set>
         </option>
       </GradleProjectSettings>

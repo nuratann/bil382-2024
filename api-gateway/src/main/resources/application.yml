@@ -33,6 +33,10 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/v1/categories/**
+        - id: product-service-route-reviews
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/reviews/**
         - id: auth-service-route
           uri: lb://auth-service
           predicates:
@@ -45,6 +49,10 @@ spring:
           uri: lb://media-store
           predicates:
             - Path=/api/v1/media/**
+        - id: websocket-route
+          uri: lb://websocket-service
+          predicates:
+            - Path=/api/v1/websocket/**
 server:
   port: 8081
 eureka:

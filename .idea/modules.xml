@@ -4,8 +4,12 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ad-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ad-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bil382-2024.eureka-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bil382-2024.eureka-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bil382-2024.product-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bil382-2024.product-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bil382-2024.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bil382-2024.user-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/elastic-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/elastic-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/eureka-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/eureka-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kg.buyers.auth-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kg.buyers.auth-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/kg.buyers.elastic-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kg.buyers.elastic-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/kg.buyers.eureka-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kg.buyers.eureka-server.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/kg.buyers.product-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kg.buyers.product-service.main.iml" />
